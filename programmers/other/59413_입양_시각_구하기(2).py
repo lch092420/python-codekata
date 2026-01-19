@@ -1,0 +1,21 @@
+# 입양 시각 구하기(2)
+# 프로그래머스 (unknown)
+# 문제 링크: https://school.programmers.co.kr/learn/courses/30/lessons/59413
+# 작성자: 학생
+# 작성일: 2026. 01. 19. 16:19:58
+
+-- 코드를 입력하세요
+WITH RECURSIVE REP AS(
+SELECT 0 AS N
+UNION ALL
+SELECT N+1
+FROM REP
+WHERE N <23
+)
+,CNT AS(
+SELECT HOUR(DATETIME) AS HOUR , COUNT(*) AS COUNT
+FROM ANIMAL_OUTS O
+GROUP BY HOUR
+)
+SELECT REP.N, IFNULL(CNT.COUNT,0) AS COUNT
+FROM REP LEFT JOIN CNT ON REP.N = CNT.HOUR
